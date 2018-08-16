@@ -2,6 +2,7 @@ import os
 import re
 import subprocess
 import platform
+from builtins import *
 
 def add_jobs_segment(powerline):
     num_jobs = 0
@@ -9,8 +10,8 @@ def add_jobs_segment(powerline):
     if platform.system().startswith('CYGWIN'):
         # cygwin ps is a special snowflake...
         output_proc = subprocess.Popen(['ps', '-af'], stdout=subprocess.PIPE)
-        output = map(lambda l: int(l.split()[2].strip()),
-            output_proc.communicate()[0].decode("utf-8").splitlines()[1:])
+        output = list(map(lambda l: int(l.split()[2].strip()),
+            output_proc.communicate()[0].decode("utf-8").splitlines()[1:]))
 
         num_jobs = output.count(os.getppid()) - 1
 
